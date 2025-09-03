@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { mockUser } from '../state/mockData.js'
+import { api } from '../state/api.js'
 
 const AppContext = createContext(null)
 
@@ -12,7 +12,11 @@ export function AppProvider({ children }) {
     const saved = localStorage.getItem('edu_font_scale')
     return saved ? Number(saved) : 1
   })
-  const [user] = useState(mockUser)
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    api.getUser().then(setUser).catch(() => setUser(null))
+  }, [])
 
   useEffect(() => {
     localStorage.setItem('edu_theme', theme)

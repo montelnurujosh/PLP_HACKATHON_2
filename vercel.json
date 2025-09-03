@@ -2,19 +2,20 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
+      "src": "client/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
+      "config": {
+        "distDir": "dist"
+      }
     }
   ],
   "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "dist/index.html" }
+    {
+      "src": "/(.*)",
+      "dest": "/client/$1"
+    }
   ],
-  "github": {
-    "enabled": true,
-    "silent": true,
-    "autoJobCancelation": true
+  "env": {
+    "VITE_API_URL": "@vite_api_url"
   }
 }
-
